@@ -22,6 +22,7 @@ class PagePlay extends StatefulWidget {
 
 class _PagePlayState extends State<PagePlay> {
   bool melodiePlaying = false;
+  bool solvedPuzzel = false;
 
   Widget _buildGameBoard() {
     int numOfColumns = widget.imageId < 2 ? (widget.imageId + 2) : 8;
@@ -77,7 +78,11 @@ class _PagePlayState extends State<PagePlay> {
             child: Container())); // TODO GAME_OVER
   }
 
-  void toogleMelodie() async {
+  void toggelMelodie() async {
+    if (!solvedPuzzel) {
+      return;
+    }
+
     await widget.stopBackgroundMusic();
 
     if (melodiePlaying) {
@@ -89,6 +94,16 @@ class _PagePlayState extends State<PagePlay> {
     setState(() {
       melodiePlaying = !melodiePlaying;
     });
+  }
+
+  IconData melodyControlIcon() {
+    if (!solvedPuzzel) {
+      return Icons.lock_outlined;
+    } else if (melodiePlaying) {
+      return Icons.pause_circle_outline;
+    } else {
+      return Icons.play_circle_outline;
+    }
   }
 
   @override
@@ -144,6 +159,7 @@ class _PagePlayState extends State<PagePlay> {
                   ],
                 ),
               ),
+              /*
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(
@@ -162,17 +178,14 @@ class _PagePlayState extends State<PagePlay> {
                   ],
                 ),
               ),
+              */
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   IconButton(
-                      icon: Icon(
-                        this.melodiePlaying
-                            ? Icons.pause_circle_outline
-                            : Icons.play_circle_outline,
-                      ),
+                      icon: Icon(melodyControlIcon()),
                       iconSize: 50,
-                      onPressed: toogleMelodie),
+                      onPressed: toggelMelodie),
                 ],
               )
             ],
