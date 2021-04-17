@@ -19,7 +19,9 @@ class PagePlay extends StatefulWidget {
 
 class _PagePlayState extends State<PagePlay> {
   Widget _buildGameBoard() {
+    int numOfColumns = widget.imageId < 2 ? (widget.imageId + 2) : 8;
     widget._gameBoard = GameBoard(
+      numOfColumns: numOfColumns,
       blockPlacedCallback: onBlockPlaced,
       outOfBlocksCallback: null,
       //rowsClearedCallback: rowsClearedCallback,

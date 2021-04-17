@@ -7,12 +7,15 @@ import 'package:music_blocks/block.dart';
 class GameBoard extends StatefulWidget {
   _GameBoardState _gameBoardState;
 
-  final numOfColumns = 8;
+  final int numOfColumns;
 
   final BlockPlacedCallback blockPlacedCallback;
   final OutOfBlocksCallback outOfBlocksCallback;
 
-  GameBoard({this.blockPlacedCallback, this.outOfBlocksCallback});
+  GameBoard(
+      {this.numOfColumns = 8,
+      this.blockPlacedCallback,
+      this.outOfBlocksCallback});
 
   @override
   _GameBoardState createState() {
