@@ -102,7 +102,7 @@ class MyHomePage extends StatefulWidget {
     if (!backgroundMusicIsPlaying) {
       backgroundMusicIsPlaying = true;
       audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-      return audioPlayer.play("assets/music/Duckpond_Titelmusik.mp3",
+      return audioPlayer.play("assets/assets/music/Duckpond_Titelmusik.mp3",
           isLocal: true, volume: 0.5);
     }
   }
