@@ -3,6 +3,7 @@ import 'package:music_blocks/block.dart';
 import 'package:music_blocks/game_board.dart';
 import 'package:music_blocks/game_objects.dart';
 import 'package:music_blocks/utils.dart';
+import 'package:tuple/tuple.dart';
 
 class PagePlay extends StatefulWidget {
   final int imageId;
@@ -52,9 +53,31 @@ class _PagePlayState extends State<PagePlay> {
   }
 
   Widget _buildBottomSection() {
+    List<Tuple2<BlockType, Color>> availableBlocks;
+
+    switch (widget.imageId) {
+      case 0:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+        ];
+        break;
+      case 1:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+        ];
+        break;
+      default:
+        availableBlocks = [];
+    }
+
     if (widget._gameObjects == null) {
       widget._gameObjects = Blocks(
         blockDroppedCallback: onBlockDropped,
+        blocksSelection: availableBlocks,
       );
     }
     return widget._gameObjects;
