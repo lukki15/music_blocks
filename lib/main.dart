@@ -110,11 +110,16 @@ class MyHomePage extends StatefulWidget {
 
   Future<int> playMelodie(int id) async {
     if (backgroundMusicIsPlaying) {
-      stopdMusic();
+      await stopdMusic();
     }
-    audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
-    return audioPlayer.play("assets/assets/music/" + musik[id],
-        isLocal: true, volume: 1);
+    if (id < 0) {
+      return startBackgroundMusic();
+    } else if (id < musik.length) {
+      audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
+      return audioPlayer.play("assets/assets/music/" + musik[id],
+          isLocal: true, volume: 1);
+    }
+    return -1;
   }
 
   Future<int> stopdMusic() async {

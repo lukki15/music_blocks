@@ -21,6 +21,8 @@ class PagePlay extends StatefulWidget {
 }
 
 class _PagePlayState extends State<PagePlay> {
+  bool melodiePlaying = false;
+
   Widget _buildGameBoard() {
     int numOfColumns = widget.imageId < 2 ? (widget.imageId + 2) : 8;
     widget._gameBoard = GameBoard(
@@ -75,9 +77,18 @@ class _PagePlayState extends State<PagePlay> {
             child: Container())); // TODO GAME_OVER
   }
 
-  void playMelodie() async {
+  void toogleMelodie() async {
     await widget.stopBackgroundMusic();
-    widget.playMusic(widget.imageId);
+
+    if (melodiePlaying) {
+      widget.playMusic(-1);
+    } else {
+      widget.playMusic(widget.imageId);
+    }
+
+    setState(() {
+      melodiePlaying = !melodiePlaying;
+    });
   }
 
   @override
@@ -137,40 +148,31 @@ class _PagePlayState extends State<PagePlay> {
                 padding: const EdgeInsets.symmetric(horizontal: 15.0),
                 child: Row(
                   children: [
-                    Text("1:20"),
+                    Text("0:00"),
                     Expanded(
                       child: Slider(
                         activeColor: Colors.pink,
                         min: 0,
                         max: 100,
-                        value: 30,
+                        value: 0,
                         onChanged: (_) {},
                       ),
                     ),
-                    Text("5:30")
+                    Text("0:00")
                   ],
                 ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(Icons.arrow_left, size: 50),
-                  SizedBox(
-                    width: 20,
-                  ),
                   IconButton(
                       icon: Icon(
-                        Icons.play_circle_outline,
+                        this.melodiePlaying
+                            ? Icons.pause_circle_outline
+                            : Icons.play_circle_outline,
                       ),
                       iconSize: 50,
-                      onPressed: playMelodie),
-                  SizedBox(
-                    width: 20,
-                  ),
-                  Icon(
-                    Icons.arrow_right,
-                    size: 50,
-                  )
+                      onPressed: toogleMelodie),
                 ],
               )
             ],
