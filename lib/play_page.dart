@@ -8,10 +8,13 @@ class PagePlay extends StatefulWidget {
   final int imageId;
   final String tag;
 
+  final Future<int> Function() stopBackgroundMusic;
+  final Future<int> Function(int) playMusic;
+
   Blocks _gameObjects;
   GameBoard _gameBoard;
 
-  PagePlay({this.imageId, this.tag});
+  PagePlay({this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
 
   @override
   _PagePlayState createState() => _PagePlayState();
@@ -70,6 +73,11 @@ class _PagePlayState extends State<PagePlay> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             child: Container())); // TODO GAME_OVER
+  }
+
+  void playMelodie() async {
+    await widget.stopBackgroundMusic();
+    widget.playMusic(widget.imageId);
   }
 
   @override
@@ -150,10 +158,12 @@ class _PagePlayState extends State<PagePlay> {
                   SizedBox(
                     width: 20,
                   ),
-                  Icon(
-                    Icons.pause_circle_outline,
-                    size: 50,
-                  ),
+                  IconButton(
+                      icon: Icon(
+                        Icons.play_circle_outline,
+                      ),
+                      iconSize: 50,
+                      onPressed: playMelodie),
                   SizedBox(
                     width: 20,
                   ),

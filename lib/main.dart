@@ -98,28 +98,36 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 
-  Future<int> _startBackgroundMusic() async {
+  Future<int> startBackgroundMusic() async {
     if (!backgroundMusicIsPlaying) {
       backgroundMusicIsPlaying = true;
       audioPlayer.setReleaseMode(ReleaseMode.LOOP);
       return audioPlayer.play("assets/assets/music/Duckpond_Titelmusik.mp3",
           isLocal: true, volume: 0.5);
     }
+    return 0;
   }
 
-  Future<int> _pauseBackgroundMusic() async {
-    return audioPlayer.pause();
+  Future<int> playMelodie(int id) async {
+    if (backgroundMusicIsPlaying) {
+      stopdMusic();
+    }
+    audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
+    return audioPlayer.play("assets/assets/music/" + musik[id],
+        isLocal: true, volume: 1);
   }
 
-  Future<int> _resumeBackgroundMusic() async {
-    return audioPlayer.resume();
+  Future<int> stopdMusic() async {
+    backgroundMusicIsPlaying = false;
+    audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
+    return audioPlayer.stop();
   }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    widget._startBackgroundMusic();
+    widget.startBackgroundMusic();
 
     return Scaffold(
         backgroundColor: Colors.black,
@@ -153,10 +161,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     scrollDirection: Axis.horizontal,
                     children: [
                       RecommendedCard(
+                        stopBackgroundMusic: widget.stopdMusic,
+                        playMusic: widget.playMelodie,
                         imageId: 0,
                         tag: "r1",
                       ),
                       RecommendedCard(
+                        stopBackgroundMusic: widget.stopdMusic,
+                        playMusic: widget.playMelodie,
                         imageId: 1,
                         tag: "r2",
                       ),
@@ -200,22 +212,32 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisCount: 2,
                   children: [
                     HotPlayCard(
+                      stopBackgroundMusic: widget.stopdMusic,
+                      playMusic: widget.playMelodie,
                       imageId: 2,
                       tag: "h1",
                     ),
                     HotPlayCard(
+                      stopBackgroundMusic: widget.stopdMusic,
+                      playMusic: widget.playMelodie,
                       imageId: 3,
                       tag: "h2",
                     ),
                     HotPlayCard(
+                      stopBackgroundMusic: widget.stopdMusic,
+                      playMusic: widget.playMelodie,
                       imageId: 4,
                       tag: "h3",
                     ),
                     HotPlayCard(
+                      stopBackgroundMusic: widget.stopdMusic,
+                      playMusic: widget.playMelodie,
                       imageId: 5,
                       tag: "h4",
                     ),
                     HotPlayCard(
+                      stopBackgroundMusic: widget.stopdMusic,
+                      playMusic: widget.playMelodie,
                       imageId: 6,
                       tag: "h5",
                     ),
@@ -231,7 +253,11 @@ class _MyHomePageState extends State<MyHomePage> {
 class RecommendedCard extends StatelessWidget {
   final int imageId;
   final String tag;
-  RecommendedCard({this.imageId, this.tag});
+
+  final Future<int> Function() stopBackgroundMusic;
+  final Future<int> Function(int) playMusic;
+  RecommendedCard(
+      {this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
 
   @override
   Widget build(BuildContext context) {
@@ -241,6 +267,8 @@ class RecommendedCard extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (_) => PagePlay(
+                    stopBackgroundMusic: this.stopBackgroundMusic,
+                    playMusic: this.playMusic,
                     tag: this.tag,
                     imageId: this.imageId,
                   )),
@@ -272,7 +300,11 @@ class RecommendedCard extends StatelessWidget {
 class HotPlayCard extends StatelessWidget {
   final int imageId;
   final String tag;
-  HotPlayCard({this.imageId, this.tag});
+
+  final Future<int> Function() stopBackgroundMusic;
+  final Future<int> Function(int) playMusic;
+  HotPlayCard(
+      {this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
 
   @override
   Widget build(BuildContext context) {
@@ -282,6 +314,8 @@ class HotPlayCard extends StatelessWidget {
           context,
           MaterialPageRoute(
               builder: (_) => PagePlay(
+                    stopBackgroundMusic: this.stopBackgroundMusic,
+                    playMusic: this.playMusic,
                     tag: this.tag,
                     imageId: this.imageId,
                   )),

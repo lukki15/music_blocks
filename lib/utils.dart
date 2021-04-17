@@ -31,12 +31,12 @@ List<String> musikTitle = <String>[
 
 List<String> musik = <String>[
   "Freejazz.mp3",
-  "jazzfunk.mp3",
-  "jazztronica.mp3",
+  "Jazzfunk.mp3",
+  "Jazztronica.mp3",
   "Latin.mp3",
   "Freejazz.mp3",
-  "jazzfunk.mp3",
-  "jazztronica.mp3",
+  "Jazzfunk.mp3",
+  "Jazztronica.mp3",
 ];
 
 typedef BlockPlacedCallback = void Function(BlockType blockType);
