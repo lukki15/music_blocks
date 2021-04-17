@@ -21,6 +21,7 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashScreen(
         seconds: 3,
+        //seconds: 1,
         backgroundColor: Colors.black,
         image: Image.asset("assets/loading_music_node_outOfOrder.gif"),
         loaderColor: Colors.white,

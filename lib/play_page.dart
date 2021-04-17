@@ -27,7 +27,6 @@ class _PagePlayState extends State<PagePlay> {
   }
 
   void onBlockPlaced(BlockType blockType) {
-    print("onBlockPlaced");
     widget._gameObjects?.onBlockPlaced(blockType);
     //_currentScore += getUnitBlocksCount(blockType) * pointsPerBlockUnitPlaced;
     //_scoreBoard?.updateScoreboard(_currentScore);

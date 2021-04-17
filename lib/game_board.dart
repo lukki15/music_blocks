@@ -11,15 +11,14 @@ class GameBoard extends StatefulWidget {
 
   final BlockPlacedCallback blockPlacedCallback;
   final OutOfBlocksCallback outOfBlocksCallback;
-  final RowsClearedCallback rowsClearedCallback;
 
-  GameBoard(
-      {this.blockPlacedCallback,
-      this.outOfBlocksCallback,
-      this.rowsClearedCallback});
+  GameBoard({this.blockPlacedCallback, this.outOfBlocksCallback});
 
   @override
-  _GameBoardState createState() => _GameBoardState();
+  _GameBoardState createState() {
+    this._gameBoardState = _GameBoardState();
+    return this._gameBoardState;
+  }
 
   void onBlockDropped(
       BlockType blockType, Color blockColor, Offset blockPosition) {

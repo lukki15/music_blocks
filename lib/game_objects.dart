@@ -106,7 +106,6 @@ class _BlocksState extends State<Blocks> {
   }
 
   void _onBlockPlaced(BlockType blockType) {
-    debugPrint("_onBlockPlaced");
     draggableBlocks[draggableBlocks.indexWhere(
         (block) => block != null && block.blockType == blockType)] = null;
 
