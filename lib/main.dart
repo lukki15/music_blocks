@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:music_blocks/play_page.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -27,7 +28,7 @@ class MyApp extends StatelessWidget {
         image: Image.asset("assets/loading_music_node_outOfOrder.gif"),
         loaderColor: Colors.white,
         photoSize: 150.0,
-        navigateAfterSeconds: MyHomePage(title: 'Music Blocks'),
+        navigateAfterSeconds: MainMenu(title: 'Music Blocks'),
         /*
         navigateAfterSeconds: PagePlay(
           imageId: 1,
@@ -39,18 +40,87 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class MainMenu extends StatelessWidget {
+  final String title;
+
+  MainMenu({this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      appBar: AppBar(
+        title: Text(this.title),
+      ),
+      body: Container(
+        child: Column(
+          children: [
+            Expanded(
+                flex: 3,
+                child: Center(
+                  child: Image.asset("assets/music_logo.png",
+                      width: 300, height: 300, fit: BoxFit.contain),
+                )),
+            Expanded(
+                flex: 2,
+                child: Center(
+                  child: IconButton(
+                    icon: Icon(Icons.play_circle_outline),
+                    iconSize: 200,
+                    onPressed: () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => MyHomePage(title: this.title)),
+                      );
+                    },
+                  ),
+                )),
+            Expanded(
+                child: Center(
+              child: Text("by LUKKI15 and LEON KERNER"),
+            ))
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
+  AudioPlayer audioPlayer = new AudioPlayer();
+
+  bool backgroundMusicIsPlaying = false;
 
   final String title;
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
+
+  Future<int> _startBackgroundMusic() async {
+    if (!backgroundMusicIsPlaying) {
+      backgroundMusicIsPlaying = true;
+      audioPlayer.setReleaseMode(ReleaseMode.LOOP);
+      return audioPlayer.play("assets/music/Duckpond_Titelmusik.mp3",
+          isLocal: true, volume: 0.5);
+    }
+  }
+
+  Future<int> _pauseBackgroundMusic() async {
+    return audioPlayer.pause();
+  }
+
+  Future<int> _resumeBackgroundMusic() async {
+    return audioPlayer.resume();
+  }
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
+    widget._startBackgroundMusic();
+
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
