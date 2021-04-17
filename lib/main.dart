@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:assets_audio_player/assets_audio_player.dart';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:music_blocks/play_page.dart';
@@ -89,7 +88,7 @@ class MainMenu extends StatelessWidget {
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
-  AudioPlayer audioPlayer = new AudioPlayer();
+  final assetsAudioPlayer = AssetsAudioPlayer();
 
   bool backgroundMusicIsPlaying = false;
 
@@ -98,34 +97,34 @@ class MyHomePage extends StatefulWidget {
   @override
   _MyHomePageState createState() => _MyHomePageState();
 
-  Future<int> startBackgroundMusic() async {
+  Future<void> startBackgroundMusic() async {
     if (!backgroundMusicIsPlaying) {
       backgroundMusicIsPlaying = true;
-      audioPlayer.setReleaseMode(ReleaseMode.LOOP);
-      return audioPlayer.play("assets/assets/music/Duckpond_Titelmusik.mp3",
-          isLocal: true, volume: 0.5);
+      return assetsAudioPlayer.open(
+          Audio("assets/music/Duckpond_Titelmusik.mp3"),
+          showNotification: false,
+          loopMode: LoopMode.single,
+          volume: 0.5);
     }
-    return 0;
+    return;
   }
 
-  Future<int> playMelodie(int id) async {
+  Future<void> playMelodie(int id) async {
     if (backgroundMusicIsPlaying) {
       await stopdMusic();
     }
     if (id < 0) {
       return startBackgroundMusic();
     } else if (id < musik.length) {
-      audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
-      return audioPlayer.play("assets/assets/music/" + musik[id],
-          isLocal: true, volume: 1);
+      return assetsAudioPlayer.open(Audio("assets/music/" + musik[id]),
+          showNotification: false, loopMode: LoopMode.none, volume: 1);
     }
-    return -1;
+    return;
   }
 
-  Future<int> stopdMusic() async {
+  Future<void> stopdMusic() async {
     backgroundMusicIsPlaying = false;
-    audioPlayer.setReleaseMode(ReleaseMode.RELEASE);
-    return audioPlayer.stop();
+    return assetsAudioPlayer.stop();
   }
 }
 
@@ -133,7 +132,6 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     widget.startBackgroundMusic();
-
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
@@ -259,8 +257,8 @@ class RecommendedCard extends StatelessWidget {
   final int imageId;
   final String tag;
 
-  final Future<int> Function() stopBackgroundMusic;
-  final Future<int> Function(int) playMusic;
+  final Future<void> Function() stopBackgroundMusic;
+  final Future<void> Function(int) playMusic;
   RecommendedCard(
       {this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
 
@@ -306,8 +304,8 @@ class HotPlayCard extends StatelessWidget {
   final int imageId;
   final String tag;
 
-  final Future<int> Function() stopBackgroundMusic;
-  final Future<int> Function(int) playMusic;
+  final Future<void> Function() stopBackgroundMusic;
+  final Future<void> Function(int) playMusic;
   HotPlayCard(
       {this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
 

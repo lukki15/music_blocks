@@ -8,8 +8,8 @@ class PagePlay extends StatefulWidget {
   final int imageId;
   final String tag;
 
-  final Future<int> Function() stopBackgroundMusic;
-  final Future<int> Function(int) playMusic;
+  final Future<void> Function() stopBackgroundMusic;
+  final Future<void> Function(int) playMusic;
 
   Blocks _gameObjects;
   GameBoard _gameBoard;
