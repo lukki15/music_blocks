@@ -9,6 +9,26 @@ const double blockUnitSizeWithPadding = blockUnitSize + 2.0;
 const int pointsPerMatchedRow = 10;
 const int pointsPerBlockUnitPlaced = 1;
 
+List<String> images = <String>[
+  "maria_01.jpeg",
+  "p2.jpg",
+  "p3.jpg",
+  "p4.jpg",
+  "p5.jpg",
+  "p6.jpg",
+  "p7.jpg"
+];
+
+List<String> musikTitle = <String>[
+  "Introduction",
+  "Game Play",
+  "Func",
+  "Big Band",
+  "Free Style",
+  "Fusion",
+  "Ska"
+];
+
 typedef BlockPlacedCallback = void Function(BlockType blockType);
 typedef OutOfBlocksCallback = void Function(BuildContext context);
 typedef RowsClearedCallback = void Function(int numOfLines);

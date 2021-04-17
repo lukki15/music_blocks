@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:music_blocks/play_page.dart';
 import 'package:splashscreen/splashscreen.dart';
+import 'package:music_blocks/utils.dart';
 
 void main() {
   runApp(MyApp());
@@ -53,21 +54,16 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
         backgroundColor: Colors.black,
         appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.menu),
-            onPressed: () {},
-          ),
           title: Text(widget.title),
           actions: [
             Padding(
-              padding: const EdgeInsets.all(5.0),
+              padding: const EdgeInsets.only(right: 15.0),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(50),
                 child: Image.asset(
-                  "assets/images/avatar.png",
-                  width: 50,
-                  height: 50,
-                  fit: BoxFit.cover,
+                  "assets/music_logo.png",
+                  width: 35,
+                  height: 35,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),
@@ -87,17 +83,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     scrollDirection: Axis.horizontal,
                     children: [
                       RecommendedCard(
-                        imageId: Random().nextInt(6) + 1,
+                        imageId: 0,
                         tag: "r1",
                       ),
                       RecommendedCard(
-                        imageId: Random().nextInt(6) + 1,
+                        imageId: 1,
                         tag: "r2",
                       ),
-                      RecommendedCard(
-                        imageId: Random().nextInt(6) + 1,
-                        tag: "r3",
-                      )
                     ],
                   ),
                 ),
@@ -138,28 +130,24 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisCount: 2,
                   children: [
                     HotPlayCard(
-                      imageId: Random().nextInt(6) + 1,
+                      imageId: 2,
                       tag: "h1",
                     ),
                     HotPlayCard(
-                      imageId: Random().nextInt(6) + 1,
+                      imageId: 3,
                       tag: "h2",
                     ),
                     HotPlayCard(
-                      imageId: Random().nextInt(6) + 1,
+                      imageId: 4,
                       tag: "h3",
                     ),
                     HotPlayCard(
-                      imageId: Random().nextInt(6) + 1,
+                      imageId: 5,
                       tag: "h4",
                     ),
                     HotPlayCard(
-                      imageId: Random().nextInt(6) + 1,
+                      imageId: 6,
                       tag: "h5",
-                    ),
-                    HotPlayCard(
-                      imageId: Random().nextInt(6) + 1,
-                      tag: "h6",
                     ),
                   ],
                 ),
@@ -195,13 +183,14 @@ class RecommendedCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset("assets/images/p$imageId.jpg",
+              Image.asset("assets/images/" + images[imageId],
                   height: 150, width: 300, fit: BoxFit.cover),
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
-                child: Text("Sound of water", style: TextStyle(fontSize: 18)),
+                child:
+                    Text(musikTitle[imageId], style: TextStyle(fontSize: 18)),
               ),
-              Text("Denise Brewer", style: TextStyle(color: Colors.white70))
+              Text("", style: TextStyle(color: Colors.white70))
             ],
           ),
         ),
@@ -237,11 +226,11 @@ class HotPlayCard extends StatelessWidget {
               tag: this.tag,
               child: ClipRRect(
                   borderRadius: BorderRadius.circular(15),
-                  child: Image.asset("assets/images/p$imageId.jpg")),
+                  child: Image.asset("assets/images/" + images[imageId])),
             ),
             Padding(
               padding: const EdgeInsets.only(top: 8.0),
-              child: Text("My Classic List",
+              child: Text(musikTitle[imageId],
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold)),
             ),

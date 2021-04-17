@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:music_blocks/block.dart';
 import 'package:music_blocks/game_board.dart';
 import 'package:music_blocks/game_objects.dart';
+import 'package:music_blocks/utils.dart';
 
 class PagePlay extends StatefulWidget {
   final int imageId;
@@ -20,7 +21,7 @@ class _PagePlayState extends State<PagePlay> {
   Widget _buildGameBoard() {
     widget._gameBoard = GameBoard(
       blockPlacedCallback: onBlockPlaced,
-      outOfBlocksCallback: outOfBlocksCallback,
+      outOfBlocksCallback: null,
       //rowsClearedCallback: rowsClearedCallback,
     );
     return widget._gameBoard;
@@ -83,7 +84,7 @@ class _PagePlayState extends State<PagePlay> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(50),
                 child: Image.asset(
-                  'images/p' + widget.imageId.toString() + '.jpg',
+                  "assets/images/" + images[widget.imageId],
                   width: 50,
                   height: 50,
                   fit: BoxFit.cover,
@@ -114,11 +115,11 @@ class _PagePlayState extends State<PagePlay> {
                 child: Column(
                   children: [
                     Text(
-                      "Counting Stars",
+                      musikTitle[widget.imageId],
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                     ),
-                    Text("Onerepublic Natve")
+                    Text("Leon Kerner")
                   ],
                 ),
               ),
