@@ -29,6 +29,16 @@ List<String> musikTitle = <String>[
   "Ska"
 ];
 
+List<String> musik = <String>[
+  "Freejazz.mp3",
+  "jazzfunk.mp3",
+  "jazztronica.mp3",
+  "Latin.mp3",
+  "Freejazz.mp3",
+  "jazzfunk.mp3",
+  "jazztronica.mp3",
+];
+
 typedef BlockPlacedCallback = void Function(BlockType blockType);
 typedef OutOfBlocksCallback = void Function(BuildContext context);
 typedef RowsClearedCallback = void Function(int numOfLines);
