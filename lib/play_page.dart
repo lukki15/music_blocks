@@ -133,19 +133,14 @@ class _PagePlayState extends State<PagePlay> {
       body: Container(
         child: Padding(
           padding: const EdgeInsets.all(15.0),
-          child: ListView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Row(
                 children: [Icon(Icons.add), Spacer(), Icon(Icons.details)],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: _buildGameBoard(),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: _buildBottomSection(),
-              ),
+              _buildGameBoard(),
+              _buildBottomSection(),
               Padding(
                 padding: const EdgeInsets.only(top: 20.0),
                 child: Column(
@@ -154,8 +149,7 @@ class _PagePlayState extends State<PagePlay> {
                       musikTitle[widget.imageId],
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    ),
-                    Text("Leon Kerner")
+                    )
                   ],
                 ),
               ),
