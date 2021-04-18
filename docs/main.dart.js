@@ -54152,7 +54152,7 @@ K:function(a,b){var s="Music Blocks",r=null,q=X.a8J(C.U).Vk(C.k,X.a8U())
 return new S.qU(new K.tv(3,C.k,new F.zy(s,r),150,C.j,U.qu("assets/loading_music_node_outOfOrder.gif",r,r,r),r),s,q,!1,r)}}
 F.zy.prototype={
 K:function(a,b){var s=null
-return M.T2(E.a3E(s,L.eb(this.c,s)),C.k,M.cS(s,T.km(H.c([T.iT(T.mb(U.qu("assets/music_logo.png",C.lV,300,300),s,s),3),T.iT(T.mb(B.z2(s,L.mE(C.pX),200,new F.PM(this,b),s),s,s),2),T.iT(T.mb(L.eb("by LUKKI15 and LEON KERNER",s),s,s),1)],t._),C.aI,C.aO),C.o,s,s,s,s,s,s,s,s,s,s))}}
+return M.T2(E.a3E(s,L.eb(this.c,s)),C.k,M.cS(s,T.km(H.c([T.iT(T.mb(U.qu("assets/music_logo.png",C.lV,300,300),s,s),3),T.iT(T.mb(B.z2(s,L.mE(C.pX),200,new F.PM(this,b),s),s,s),2),T.iT(T.mb(L.eb("by LUKKI15 and LEON KERNER and MARIA MIFKA",s),s,s),1)],t._),C.aI,C.aO),C.o,s,s,s,s,s,s,s,s,s,s))}}
 F.PM.prototype={
 $0:function(){var s=V.zC(new F.PL(this.a),null,t.z)
 K.n1(this.b).Yt(s,null)},
@@ -59194,7 +59194,7 @@ $.cf=P.z(H.a7("fS<ak<aa>>"),t.t)
 $.bk=1
 $.af9=H.c([0,0,0],t.Y)
 $.afa=H.c([0,0,0,0],t.Y)
-$.a5F=H.c(["maria_01.jpeg","p2.jpg","p3.jpg","p4.jpg","p5.jpg","p6.jpg","p7.jpg"],t.i)
+$.a5F=H.c(["maria_01.jpeg","maria_02.jpeg","maria_03.jpeg","maria_04.jpeg","pexels-lucas-allmann-442540.jpg","pexels-ruca-souza-1049690.jpg","pexels-victor-freitas-733767.jpg"],t.i)
 $.a5L=H.c(["Introduction","Game Play","Func","Big Band","Free Style","Fusion","Ska"],t.i)
 $.akK=H.c(["Freejazz.mp3","Jazzfunk.mp3","Jazztronica.mp3","Latin.mp3","Freejazz.mp3","Jazzfunk.mp3","Jazztronica.mp3"],t.i)
 $.aaf=!0
