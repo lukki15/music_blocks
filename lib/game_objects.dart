@@ -32,6 +32,7 @@ class Blocks extends StatefulWidget {
 class _BlocksState extends State<Blocks> {
   List<Block> availableBlocks = <Block>[];
   List<Block> draggableBlocks = <Block>[];
+  Set<Block> usedBlocks = Set();
 
   List<Tuple2<BlockType, Color>> defaultAvailableBlocks =
       <Tuple2<BlockType, Color>>[
@@ -109,8 +110,16 @@ class _BlocksState extends State<Blocks> {
   void populateDraggableBlocks() {
     availableBlocks.shuffle(Random());
     draggableBlocks.clear();
-    for (int index = 0; index < 3; index++) {
-      draggableBlocks.add(availableBlocks[index]);
+    int index = 0;
+    while (draggableBlocks.length < 3) {
+      if (usedBlocks.length == availableBlocks.length) {
+        usedBlocks.clear();
+      }
+      if (!usedBlocks.contains(availableBlocks[index])) {
+        draggableBlocks.add(availableBlocks[index]);
+        usedBlocks.add(availableBlocks[index]);
+      }
+      index = (index + 1) % availableBlocks.length;
     }
   }
 }

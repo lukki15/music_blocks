@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:music_blocks/block.dart';
 import 'package:music_blocks/game_board.dart';
@@ -34,7 +36,7 @@ class _PagePlayState extends State<PagePlay> {
   bool solvedPuzzel = false;
 
   Widget _buildGameBoard() {
-    int numOfColumns = widget.imageId < 2 ? (widget.imageId + 2) : 8;
+    int numOfColumns = min(widget.imageId + 2, 8);
     widget._gameBoard = GameBoard(
       numOfColumns: numOfColumns,
       blockPlacedCallback: onBlockPlaced,
@@ -85,6 +87,85 @@ class _PagePlayState extends State<PagePlay> {
           Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
           Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
           Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+        ];
+        break;
+      case 2:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+        ];
+        break;
+      case 3:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+        ];
+        break;
+      case 4:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.greenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.green),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
+        ];
+        break;
+      case 5:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.greenAccent),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.red),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.red),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orange),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigo),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
+        ];
+        break;
+      case 6:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.greenAccent),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.red),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orange),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purple),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amber),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.teal),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
         ];
         break;
       default:
