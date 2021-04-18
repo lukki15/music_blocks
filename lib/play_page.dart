@@ -8,14 +8,22 @@ import 'package:tuple/tuple.dart';
 class PagePlay extends StatefulWidget {
   final int imageId;
   final String tag;
+  final bool alreadySolved;
 
   final Future<void> Function() stopBackgroundMusic;
   final Future<void> Function(int) playMusic;
+  final void Function(int) solvedCallback;
 
   Blocks _gameObjects;
   GameBoard _gameBoard;
 
-  PagePlay({this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
+  PagePlay(
+      {this.imageId,
+      this.tag,
+      this.stopBackgroundMusic,
+      this.playMusic,
+      this.solvedCallback,
+      this.alreadySolved});
 
   @override
   _PagePlayState createState() => _PagePlayState();
@@ -32,6 +40,7 @@ class _PagePlayState extends State<PagePlay> {
       blockPlacedCallback: onBlockPlaced,
       outOfBlocksCallback: null,
       //rowsClearedCallback: rowsClearedCallback,
+      solvedPuzzleCallback: solvedPuzzleCallback,
     );
     return widget._gameBoard;
   }
@@ -50,6 +59,14 @@ class _PagePlayState extends State<PagePlay> {
         context: context,
         barrierDismissible: false,
         builder: (BuildContext context) => _createGameOverDialog(context));
+  }
+
+  void solvedPuzzleCallback() {
+    setState(() {
+      solvedPuzzel = true;
+    });
+    toggelMelodie();
+    widget.solvedCallback(widget.imageId);
   }
 
   Widget _buildBottomSection() {
@@ -102,7 +119,7 @@ class _PagePlayState extends State<PagePlay> {
   }
 
   void toggelMelodie() async {
-    if (!solvedPuzzel) {
+    if (!solvedPuzzel && !widget.alreadySolved) {
       return;
     }
 
@@ -120,7 +137,7 @@ class _PagePlayState extends State<PagePlay> {
   }
 
   IconData melodyControlIcon() {
-    if (!solvedPuzzel) {
+    if (!solvedPuzzel && !widget.alreadySolved) {
       return Icons.lock_outlined;
     } else if (melodiePlaying) {
       return Icons.pause_circle_outline;
