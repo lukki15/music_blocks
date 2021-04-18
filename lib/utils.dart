@@ -20,13 +20,13 @@ List<String> images = <String>[
 ];
 
 List<String> musikTitle = <String>[
-  "Introduction",
-  "Game Play",
-  "Func",
-  "Big Band",
-  "Free Style",
+  "Easy (Freejazz)",
+  "Jazzfunk",
+  "Jazztronica",
+  "Latin",
   "Fusion",
-  "Ska"
+  "Contemporary",
+  "One-Way Ticket"
 ];
 
 List<String> musik = <String>[
@@ -34,9 +34,9 @@ List<String> musik = <String>[
   "Jazzfunk.mp3",
   "Jazztronica.mp3",
   "Latin.mp3",
-  "Freejazz.mp3",
-  "Jazzfunk.mp3",
-  "Jazztronica.mp3",
+  "Fusion.mp3",
+  "Contemporary.mp3",
+  "OneWayTicket.mp3",
 ];
 
 typedef BlockPlacedCallback = void Function(BlockType blockType);
