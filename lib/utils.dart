@@ -11,7 +11,7 @@ const int pointsPerBlockUnitPlaced = 1;
 
 List<String> images = <String>[
   "maria_01.jpeg",
-  "p2.jpg",
+  "maria_02.jpeg",
   "p3.jpg",
   "p4.jpg",
   "p5.jpg",

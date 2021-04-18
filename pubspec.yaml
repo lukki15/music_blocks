@@ -1,5 +1,5 @@
 name: music_blocks
-description: A new Flutter project.
+description: jazz mini game
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
@@ -32,6 +32,7 @@ dependencies:
   audioplayers: ^0.18.3
   assets_audio_player: ^3.0.3+2
   tuple: ^2.0.0
+  flutter_launcher_icons: ^0.9.0
 
 dev_dependencies:
   flutter_test:
@@ -54,6 +55,12 @@ flutter:
     - assets/images/
     - assets/music/
 
+
+flutter_icons:
+  image_path: "assets/music_logo.png"
+  android: true
+  ios: true
+  remove_alpha_ios: true
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
 
