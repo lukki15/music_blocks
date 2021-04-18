@@ -69,7 +69,7 @@ class MainMenu extends StatelessWidget {
                 )),
             Expanded(
                 child: Center(
-              child: Text("by LUKKI15 and LEON KERNER"),
+              child: Text("by LUKKI15 and LEON KERNER and MARIA MIFKA"),
             ))
           ],
         ),

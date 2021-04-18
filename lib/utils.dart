@@ -12,11 +12,11 @@ const int pointsPerBlockUnitPlaced = 1;
 List<String> images = <String>[
   "maria_01.jpeg",
   "maria_02.jpeg",
-  "p3.jpg",
-  "p4.jpg",
-  "p5.jpg",
-  "p6.jpg",
-  "p7.jpg"
+  "maria_03.jpeg",
+  "maria_04.jpeg",
+  "pexels-lucas-allmann-442540.jpg",
+  "pexels-ruca-souza-1049690.jpg",
+  "pexels-victor-freitas-733767.jpg"
 ];
 
 List<String> musikTitle = <String>[
