@@ -82,6 +82,7 @@ class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final assetsAudioPlayer = AssetsAudioPlayer();
   bool backgroundMusicIsPlaying = false;
+  int currentlyPlaying = -1;
 
   List<int> solvedPuzzles = [];
 
@@ -105,7 +106,10 @@ class MyHomePage extends StatefulWidget {
   }
 
   Future<void> playMelodie(int id) async {
-    return assetsAudioPlayer.playlistPlayAtIndex(id + 1);
+    if (currentlyPlaying != id) {
+      currentlyPlaying = id;
+      return assetsAudioPlayer.playlistPlayAtIndex(id + 1);
+    }
   }
 
   Future<void> stopdMusic() async {}
@@ -277,8 +281,8 @@ class RecommendedCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => PagePlay(
@@ -290,6 +294,7 @@ class RecommendedCard extends StatelessWidget {
                     imageId: this.imageId,
                   )),
         );
+        this.playMusic(-1);
       },
       child: Container(
         padding: EdgeInsets.only(right: 10),
@@ -334,8 +339,8 @@ class HotPlayCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => PagePlay(
@@ -347,6 +352,7 @@ class HotPlayCard extends StatelessWidget {
                     imageId: this.imageId,
                   )),
         );
+        this.playMusic(-1);
       },
       child: Container(
         padding: EdgeInsets.only(right: 20),
