@@ -1,16 +1,31 @@
 # music_blocks
 
-A new Flutter project.
+Jazz mini game, with small puzzels to unlock the experience
 
-## Getting Started
+a game developed in 48h for the [Musical Genre Jam](https://itch.io/jam/musical-genre-jam)
 
-This project is a starting point for a Flutter application.
+the game can be played here: [LINK](https://lukki15.github.io/music_blocks/)
 
-A few resources to get you started if this is your first Flutter project:
+## build and serve
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+inside Chrome
+```bash
+$ flutter run -d chrome
+```
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+inside an emulator
+```bash
+$ flutter run -d emulatr_XYZ
+```
+
+## deploy
+
+the web version
+```bash
+$ flutter build web --release
+```
+
+the Android apk
+```bash
+$ flutter build apk --release
+```
