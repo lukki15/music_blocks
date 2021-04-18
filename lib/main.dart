@@ -93,32 +93,22 @@ class MyHomePage extends StatefulWidget {
   Future<void> startBackgroundMusic() async {
     if (!backgroundMusicIsPlaying) {
       backgroundMusicIsPlaying = true;
-      return assetsAudioPlayer.open(
-          Audio("assets/music/Duckpond_Titelmusik.mp3"),
-          showNotification: false,
-          loopMode: LoopMode.single,
-          volume: 0.5);
+      List<Audio> musikList = [Audio("assets/music/Duckpond_Titelmusik.mp3")];
+      for (var fileName in musik) {
+        musikList.add(Audio("assets/music/" + fileName));
+      }
+
+      assetsAudioPlayer.open(Playlist(audios: musikList),
+          loopMode: LoopMode.single);
     }
     return;
   }
 
   Future<void> playMelodie(int id) async {
-    if (backgroundMusicIsPlaying) {
-      await stopdMusic();
-    }
-    if (id < 0) {
-      return startBackgroundMusic();
-    } else if (id < musik.length) {
-      return assetsAudioPlayer.open(Audio("assets/music/" + musik[id]),
-          showNotification: false, loopMode: LoopMode.none, volume: 1);
-    }
-    return;
+    return assetsAudioPlayer.playlistPlayAtIndex(id + 1);
   }
 
-  Future<void> stopdMusic() async {
-    backgroundMusicIsPlaying = false;
-    return assetsAudioPlayer.stop();
-  }
+  Future<void> stopdMusic() async {}
 }
 
 class _MyHomePageState extends State<MyHomePage> {

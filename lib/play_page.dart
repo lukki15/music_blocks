@@ -61,11 +61,11 @@ class _PagePlayState extends State<PagePlay> {
         builder: (BuildContext context) => _createGameOverDialog(context));
   }
 
-  void solvedPuzzleCallback() {
+  void solvedPuzzleCallback() async {
     setState(() {
       solvedPuzzel = true;
     });
-    toggelMelodie();
+    await toggelMelodie();
     widget.solvedCallback(widget.imageId);
   }
 
@@ -118,7 +118,7 @@ class _PagePlayState extends State<PagePlay> {
             child: Container())); // TODO GAME_OVER
   }
 
-  void toggelMelodie() async {
+  Future<void> toggelMelodie() async {
     if (!solvedPuzzel && !widget.alreadySolved) {
       return;
     }
@@ -126,9 +126,9 @@ class _PagePlayState extends State<PagePlay> {
     await widget.stopBackgroundMusic();
 
     if (melodiePlaying) {
-      widget.playMusic(-1);
+      await widget.playMusic(-1);
     } else {
-      widget.playMusic(widget.imageId);
+      await widget.playMusic(widget.imageId);
     }
 
     setState(() {
