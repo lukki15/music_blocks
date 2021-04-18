@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:music_blocks/block.dart';
 import 'package:music_blocks/game_board.dart';
@@ -8,14 +10,22 @@ import 'package:tuple/tuple.dart';
 class PagePlay extends StatefulWidget {
   final int imageId;
   final String tag;
+  final bool alreadySolved;
 
   final Future<void> Function() stopBackgroundMusic;
   final Future<void> Function(int) playMusic;
+  final void Function(int) solvedCallback;
 
   Blocks _gameObjects;
   GameBoard _gameBoard;
 
-  PagePlay({this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
+  PagePlay(
+      {this.imageId,
+      this.tag,
+      this.stopBackgroundMusic,
+      this.playMusic,
+      this.solvedCallback,
+      this.alreadySolved});
 
   @override
   _PagePlayState createState() => _PagePlayState();
@@ -26,12 +36,13 @@ class _PagePlayState extends State<PagePlay> {
   bool solvedPuzzel = false;
 
   Widget _buildGameBoard() {
-    int numOfColumns = widget.imageId < 2 ? (widget.imageId + 2) : 8;
+    int numOfColumns = min(widget.imageId + 2, 8);
     widget._gameBoard = GameBoard(
       numOfColumns: numOfColumns,
       blockPlacedCallback: onBlockPlaced,
       outOfBlocksCallback: null,
       //rowsClearedCallback: rowsClearedCallback,
+      solvedPuzzleCallback: solvedPuzzleCallback,
     );
     return widget._gameBoard;
   }
@@ -52,6 +63,14 @@ class _PagePlayState extends State<PagePlay> {
         builder: (BuildContext context) => _createGameOverDialog(context));
   }
 
+  void solvedPuzzleCallback() async {
+    setState(() {
+      solvedPuzzel = true;
+    });
+    await toggelMelodie();
+    widget.solvedCallback(widget.imageId);
+  }
+
   Widget _buildBottomSection() {
     List<Tuple2<BlockType, Color>> availableBlocks;
 
@@ -68,6 +87,85 @@ class _PagePlayState extends State<PagePlay> {
           Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
           Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
           Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+        ];
+        break;
+      case 2:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+        ];
+        break;
+      case 3:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+        ];
+        break;
+      case 4:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.greenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.green),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
+        ];
+        break;
+      case 5:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.greenAccent),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.red),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.red),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orange),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigo),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
+        ];
+        break;
+      case 6:
+        availableBlocks = <Tuple2<BlockType, Color>>[
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.lightGreenAccent),
+          Tuple2<BlockType, Color>(BlockType.SINGLE, Colors.greenAccent),
+          Tuple2<BlockType, Color>(BlockType.DOUBLE, Colors.lightBlueAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.red),
+          Tuple2<BlockType, Color>(BlockType.LINE_HORIZONTAL, Colors.redAccent),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.LINE_VERTICAL, Colors.brown),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orangeAccent),
+          Tuple2<BlockType, Color>(BlockType.SQUARE, Colors.orange),
+          Tuple2<BlockType, Color>(BlockType.TYPE_T, Colors.indigoAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_L, Colors.pinkAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purpleAccent),
+          Tuple2<BlockType, Color>(BlockType.MIRRORED_L, Colors.purple),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amberAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_Z, Colors.amber),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.teal),
+          Tuple2<BlockType, Color>(BlockType.TYPE_S, Colors.tealAccent),
         ];
         break;
       default:
@@ -101,17 +199,17 @@ class _PagePlayState extends State<PagePlay> {
             child: Container())); // TODO GAME_OVER
   }
 
-  void toggelMelodie() async {
-    if (!solvedPuzzel) {
+  Future<void> toggelMelodie() async {
+    if (!solvedPuzzel && !widget.alreadySolved) {
       return;
     }
 
     await widget.stopBackgroundMusic();
 
     if (melodiePlaying) {
-      widget.playMusic(-1);
+      await widget.playMusic(-1);
     } else {
-      widget.playMusic(widget.imageId);
+      await widget.playMusic(widget.imageId);
     }
 
     setState(() {
@@ -120,7 +218,7 @@ class _PagePlayState extends State<PagePlay> {
   }
 
   IconData melodyControlIcon() {
-    if (!solvedPuzzel) {
+    if (!solvedPuzzel && !widget.alreadySolved) {
       return Icons.lock_outlined;
     } else if (melodiePlaying) {
       return Icons.pause_circle_outline;

@@ -1,5 +1,4 @@
 import 'package:assets_audio_player/assets_audio_player.dart';
-import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
 import 'package:music_blocks/play_page.dart';
 import 'package:splashscreen/splashscreen.dart';
@@ -22,18 +21,11 @@ class MyApp extends StatelessWidget {
       ),
       home: SplashScreen(
         seconds: 3,
-        //seconds: 1,
         backgroundColor: Colors.black,
         image: Image.asset("assets/loading_music_node_outOfOrder.gif"),
         loaderColor: Colors.white,
         photoSize: 150.0,
         navigateAfterSeconds: MainMenu(title: 'Music Blocks'),
-        /*
-        navigateAfterSeconds: PagePlay(
-          imageId: 1,
-          tag: "test",
-        ),
-        */
       ),
     );
   }
@@ -89,8 +81,10 @@ class MainMenu extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
   final assetsAudioPlayer = AssetsAudioPlayer();
-
   bool backgroundMusicIsPlaying = false;
+  int currentlyPlaying = -1;
+
+  List<int> solvedPuzzles = [];
 
   final String title;
 
@@ -100,35 +94,34 @@ class MyHomePage extends StatefulWidget {
   Future<void> startBackgroundMusic() async {
     if (!backgroundMusicIsPlaying) {
       backgroundMusicIsPlaying = true;
-      return assetsAudioPlayer.open(
-          Audio("assets/music/Duckpond_Titelmusik.mp3"),
-          showNotification: false,
-          loopMode: LoopMode.single,
-          volume: 0.5);
+      List<Audio> musikList = [Audio("assets/music/Duckpond_Titelmusik.mp3")];
+      for (var fileName in musik) {
+        musikList.add(Audio("assets/music/" + fileName));
+      }
+
+      assetsAudioPlayer.open(Playlist(audios: musikList),
+          loopMode: LoopMode.single);
     }
     return;
   }
 
   Future<void> playMelodie(int id) async {
-    if (backgroundMusicIsPlaying) {
-      await stopdMusic();
+    if (currentlyPlaying != id) {
+      currentlyPlaying = id;
+      return assetsAudioPlayer.playlistPlayAtIndex(id + 1);
     }
-    if (id < 0) {
-      return startBackgroundMusic();
-    } else if (id < musik.length) {
-      return assetsAudioPlayer.open(Audio("assets/music/" + musik[id]),
-          showNotification: false, loopMode: LoopMode.none, volume: 1);
-    }
-    return;
   }
 
-  Future<void> stopdMusic() async {
-    backgroundMusicIsPlaying = false;
-    return assetsAudioPlayer.stop();
-  }
+  Future<void> stopdMusic() async {}
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  void solvedPuzzleCallback(int id) {
+    setState(() {
+      widget.solvedPuzzles.add(id);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     widget.startBackgroundMusic();
@@ -164,12 +157,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     scrollDirection: Axis.horizontal,
                     children: [
                       RecommendedCard(
+                        solvedPuzzleCallback: solvedPuzzleCallback,
+                        alreadySolved: widget.solvedPuzzles.contains(0),
                         stopBackgroundMusic: widget.stopdMusic,
                         playMusic: widget.playMelodie,
                         imageId: 0,
                         tag: "r1",
                       ),
                       RecommendedCard(
+                        solvedPuzzleCallback: solvedPuzzleCallback,
+                        alreadySolved: widget.solvedPuzzles.contains(1),
                         stopBackgroundMusic: widget.stopdMusic,
                         playMusic: widget.playMelodie,
                         imageId: 1,
@@ -215,30 +212,40 @@ class _MyHomePageState extends State<MyHomePage> {
                   crossAxisCount: 2,
                   children: [
                     HotPlayCard(
+                      solvedPuzzleCallback: solvedPuzzleCallback,
+                      alreadySolved: widget.solvedPuzzles.contains(2),
                       stopBackgroundMusic: widget.stopdMusic,
                       playMusic: widget.playMelodie,
                       imageId: 2,
                       tag: "h1",
                     ),
                     HotPlayCard(
+                      solvedPuzzleCallback: solvedPuzzleCallback,
+                      alreadySolved: widget.solvedPuzzles.contains(3),
                       stopBackgroundMusic: widget.stopdMusic,
                       playMusic: widget.playMelodie,
                       imageId: 3,
                       tag: "h2",
                     ),
                     HotPlayCard(
+                      solvedPuzzleCallback: solvedPuzzleCallback,
+                      alreadySolved: widget.solvedPuzzles.contains(4),
                       stopBackgroundMusic: widget.stopdMusic,
                       playMusic: widget.playMelodie,
                       imageId: 4,
                       tag: "h3",
                     ),
                     HotPlayCard(
+                      solvedPuzzleCallback: solvedPuzzleCallback,
+                      alreadySolved: widget.solvedPuzzles.contains(5),
                       stopBackgroundMusic: widget.stopdMusic,
                       playMusic: widget.playMelodie,
                       imageId: 5,
                       tag: "h4",
                     ),
                     HotPlayCard(
+                      solvedPuzzleCallback: solvedPuzzleCallback,
+                      alreadySolved: widget.solvedPuzzles.contains(6),
                       stopBackgroundMusic: widget.stopdMusic,
                       playMusic: widget.playMelodie,
                       imageId: 6,
@@ -259,23 +266,35 @@ class RecommendedCard extends StatelessWidget {
 
   final Future<void> Function() stopBackgroundMusic;
   final Future<void> Function(int) playMusic;
+
+  final void Function(int) solvedPuzzleCallback;
+  final bool alreadySolved;
+
   RecommendedCard(
-      {this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
+      {this.imageId,
+      this.tag,
+      this.stopBackgroundMusic,
+      this.playMusic,
+      this.solvedPuzzleCallback,
+      this.alreadySolved});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => PagePlay(
+                    solvedCallback: this.solvedPuzzleCallback,
+                    alreadySolved: alreadySolved,
                     stopBackgroundMusic: this.stopBackgroundMusic,
                     playMusic: this.playMusic,
                     tag: this.tag,
                     imageId: this.imageId,
                   )),
         );
+        this.playMusic(-1);
       },
       child: Container(
         padding: EdgeInsets.only(right: 10),
@@ -306,23 +325,34 @@ class HotPlayCard extends StatelessWidget {
 
   final Future<void> Function() stopBackgroundMusic;
   final Future<void> Function(int) playMusic;
+
+  final void Function(int) solvedPuzzleCallback;
+  final bool alreadySolved;
   HotPlayCard(
-      {this.imageId, this.tag, this.stopBackgroundMusic, this.playMusic});
+      {this.imageId,
+      this.tag,
+      this.stopBackgroundMusic,
+      this.playMusic,
+      this.solvedPuzzleCallback,
+      this.alreadySolved});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        Navigator.push(
+      onTap: () async {
+        await Navigator.push(
           context,
           MaterialPageRoute(
               builder: (_) => PagePlay(
+                    solvedCallback: this.solvedPuzzleCallback,
+                    alreadySolved: alreadySolved,
                     stopBackgroundMusic: this.stopBackgroundMusic,
                     playMusic: this.playMusic,
                     tag: this.tag,
                     imageId: this.imageId,
                   )),
         );
+        this.playMusic(-1);
       },
       child: Container(
         padding: EdgeInsets.only(right: 20),

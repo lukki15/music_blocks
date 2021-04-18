@@ -11,11 +11,13 @@ class GameBoard extends StatefulWidget {
 
   final BlockPlacedCallback blockPlacedCallback;
   final OutOfBlocksCallback outOfBlocksCallback;
+  final void Function() solvedPuzzleCallback;
 
   GameBoard(
       {this.numOfColumns = 8,
       this.blockPlacedCallback,
-      this.outOfBlocksCallback});
+      this.outOfBlocksCallback,
+      this.solvedPuzzleCallback});
 
   @override
   _GameBoardState createState() {
@@ -37,6 +39,7 @@ class _GameBoardState extends State<GameBoard> {
   List<Widget> cells = <Widget>[];
   List<Color> cellColorsList = <Color>[];
   List<Rect> gridBlockRectangleList;
+  List<int> alreadyFilledCells = [];
 
   final margin = 8.0;
 
@@ -53,12 +56,19 @@ class _GameBoardState extends State<GameBoard> {
     if (cellsToFill.length == numOfChildBlocks) {
       for (int index in cellsToFill) {
         cellColorsList[index] = blockColor;
+        alreadyFilledCells.add(index);
       }
 
       if (widget.blockPlacedCallback != null) {
         widget.blockPlacedCallback(blockType);
       }
       setState(() {});
+
+      if (alreadyFilledCells.length ==
+              widget.numOfColumns * widget.numOfColumns &&
+          widget.solvedPuzzleCallback != null) {
+        widget.solvedPuzzleCallback();
+      }
     }
   }
 
